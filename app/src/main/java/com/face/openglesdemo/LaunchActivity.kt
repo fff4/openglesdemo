@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.face.openglesdemo.bitmap.BitmapActivit
 import com.face.openglesdemo.camera.CameraActivity
+import com.face.openglesdemo.fbo.FBOActivity
 import com.face.openglesdemo.opengl.MainActivity
 import com.face.openglesdemo.rotaTranslate.RotaTranslateActivity
 import com.face.openglesdemo.util.PermissionUtils
@@ -42,6 +43,9 @@ class LaunchActivity : AppCompatActivity() {
                 initViewRunnable
             )
 
+        }
+        btn_fbo.setOnClickListener {
+            startActivity(Intent(this, FBOActivity::class.java))
         }
     }
 
