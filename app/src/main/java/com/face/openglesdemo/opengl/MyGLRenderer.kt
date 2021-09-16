@@ -26,7 +26,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     override fun onDrawFrame(p0: GL10?) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
         // Draw shape
-//        mTriangle?.draw(mMVPMatrix)
+        mTriangle?.draw(mMVPMatrix)
 //        mTriangle?.draw()
 
 //        mCircular?.draw(mMVPMatrix)
@@ -46,14 +46,29 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 //        mCylinder?.draw(mMVPMatrix)
 //        mCylinder?.draw()
 
-        mBall?.draw(mMVPMatrix)
-        mBall?.draw()
+//        mBall?.draw(mMVPMatrix)
+//        mBall?.draw()
 
     }
 
     //视图发生变化  （例如，当设备的屏幕方向改变时）
     override fun onSurfaceChanged(p0: GL10?, width: Int, height: Int) {
         GLES20.glViewport(0, 0, width, height)//设置视窗尺寸
+
+        //-----等腰三角形
+        //计算宽高比
+        val ratio = width.toFloat() / height
+        //设置透视投影
+        Matrix.frustumM(mProjectMatrix, 0,
+            -ratio, ratio, -1f, 1f,
+            3f, 7f)
+        //设置相机位置
+        Matrix.setLookAtM(mViewMatrix, 0,
+            0f, 0f, 7.0f,
+            0f, 0f, 0f,
+            0f, 1.0f, 0.0f)
+        //计算变换矩阵
+        Matrix.multiplyMM(mMVPMatrix,0,mProjectMatrix,0,mViewMatrix,0)
 
        /* //计算宽高比  平视
         val ratio = width.toFloat() / height
@@ -71,33 +86,33 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         //正方体
         //计算宽高比
-        val ratio= width/height.toFloat()
+        /*val ratio= width/height.toFloat()
         //设置透视投影
         Matrix.frustumM(mProjectMatrix, 0,
             -ratio, ratio,
             -1f, 1f,
             3f, 20f);
         //设置相机位置----正方体
-      /*  Matrix.setLookAtM(mViewMatrix, 0,
+      *//*  Matrix.setLookAtM(mViewMatrix, 0,
             5.0f, 5.0f, 10.0f,
             0f, 0f, 0f,
-            0f, 2.0f, 0.0f);*/
+            0f, 2.0f, 0.0f);*//*
         //设置相机位置----圆锥
         //设置相机位置
-        Matrix.setLookAtM(
+       *//* Matrix.setLookAtM(
             mViewMatrix,
             0,
             1.0f, 10.0f, -4.0f,
             0f, 0f, 0f,
             0f, 1.0f, 0.0f
-        )
+        )*//*
 
         //计算变换矩阵
-        Matrix.multiplyMM(mMVPMatrix,0,mProjectMatrix,0,mViewMatrix,0)
+        Matrix.multiplyMM(mMVPMatrix,0,mProjectMatrix,0,mViewMatrix,0)*/
 
-        mCone = Cone(height.toFloat())
-        mCylinder = Cylinder(height.toFloat())
-        mBall = Ball(height.toFloat())
+//        mCone = Cone(height.toFloat())
+//        mCylinder = Cylinder(height.toFloat())
+//        mBall = Ball(height.toFloat())
 
     }
 
@@ -109,9 +124,9 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         //初始化三角形
         mTriangle = Triangle()
 //        mSqura = Square()
-        mCircular = Circular()
-        mCircular2 = Circular()
-        mCube = Cube()
+//        mCircular = Circular()
+//        mCircular2 = Circular()
+//        mCube = Cube()
 
 
     }
